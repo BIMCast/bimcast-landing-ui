@@ -1,0 +1,4 @@
+$: 1172124393
+BuildCommand: build.bat
+RunCommand: run.bat
+Product: bimcast.apk

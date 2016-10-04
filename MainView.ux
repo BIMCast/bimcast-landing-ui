@@ -1,0 +1,215 @@
+<App>
+	<Fuse.iOS.StatusBarConfig Style="Light" />
+
+	<ux:Include File="Resources.ux" />
+
+	<ClientPanel >
+
+		<Rectangle Layer="Background">
+			<ImageFill File="Assets/bglogin.png" Opacity="0.83" />
+		</Rectangle>
+
+		<HidingPanel ux:Name="topPanel">
+			<GridLayout Rows="60,1*"/>
+			<WhileEnabled>
+				<Change navBarTrans.Y="0" Duration="0.4"/>
+			</WhileEnabled>
+			<Grid Columns="70,1*,70">
+				<Translation ux:Name="navBarTrans" RelativeTo="Size" Y="-0.2" />
+				<Panel HitTestMode="LocalBoundsAndChildren">
+					<Image File="Icons/menu.png" Width="30" Height="30"/>
+					<Clicked>
+						<Scale Factor="0.8" Duration=".15" Easing="CubicInOut" />
+						<Set state.Active="loginButtonState" />
+					</Clicked>
+				</Panel>
+				<Text Value="Feed" TextColor="White" FontSize="20" Alignment="VerticalCenter"/>
+				<Image File="Icons/search.png" Width="30" Height="30"/>
+			</Grid>
+			<HidingPanel ux:Name="mainPanel">
+				<JavaScript>
+					module.exports = {
+						mockItems: ["#FF4C81","#F9ED46","#47BDF9","#F97947","#FF4C81","#F9ED46","#47BDF9","#F97947"]
+					};
+				</JavaScript>
+				<ScrollView>
+					<StackPanel Margin="25">
+						<Each Items="{mockItems}">
+							<DockPanel Height="100">
+								<Circle Color="{}" Width="50" Height="50" Dock="Left"/>
+								<StackPanel ItemSpacing="15" Height="100" Margin="20,0" Alignment="VerticalCenter">
+									<Rectangle Color="Gray" Height="10" Width="100%" Alignment="Left"/>
+									<Rectangle Color="Gray" Height="10" Width="80%" Alignment="Left" />
+								</StackPanel>
+							</DockPanel>
+						</Each>
+					</StackPanel>
+				</ScrollView>
+			</HidingPanel>
+		</HidingPanel>
+
+		<HidingPanel ux:Name="authForm" Alignment="Center" Height="60%" Margin="0, 60, 0, 0" >
+			<GridLayout Rows="4*,70,0" />			
+			<Grid ux:Name="authArea" Row="0" RowCount="2" Columns="auto,1*" Height="80%" Opacity="1" Padding="55" Width="350">
+				<TextInput Row="0" Column="1" PlaceholderText="ID Number" PlaceholderColor="White" TextColor="#fff" Alignment="Center" FontSize="20"/>
+				<Rectangle Row="0" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+
+				<TextInput Row="1" Column="1" PlaceholderText="Cell Number" PlaceholderColor="White" TextColor="#fff" Alignment="Center" FontSize="20"/>
+				<Rectangle Row="1" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+			</Grid>
+
+			<Panel ux:Name="proceedButton" Width="200" Height="50" Alignment="Top" HitTestMode="LocalBounds" Row="1" Margin="0, -50, 0, 0" Color="BottomGray">
+				<Text Value="PROCEED" Alignment="Center" FontSize="20" TextColor="White" HitTestMode="LocalBounds" />
+				<Clicked>					
+					<Scale Factor="0.8" Duration=".15" Easing="CubicInOut" />
+					<Toggle Target="showOtpForm" />
+				</Clicked>
+
+				<Rectangle CornerRadius="30" Fill="#BD3925" Width="300" Height="50"/>
+
+				<WhileTrue ux:Name="moveButton">
+				<Move Target="proceedButton" Y="0.32" RelativeTo="Size" Duration="0.5" Delay="0.3" Easing="CubicInOut" />
+			</WhileTrue>
+			</Panel>
+		</HidingPanel>
+
+		<HidingPanel ux:Name="otpForm" Alignment="Center" Height="60%" Margin="0, 60, 0, 0" >
+			<GridLayout Rows="4*,70,0" />			
+			<Grid ux:Name="otpArea" Row="0" RowCount="2" Columns="auto,1*" Height="80%" Opacity="1" Padding="55" Width="350">
+				<TextInput Row="0" Column="1" PlaceholderText="Enter OTP" PlaceholderColor="White" TextColor="#fff" Alignment="Center" FontSize="20"/>
+				<Rectangle Row="0" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+			</Grid>
+
+			<Panel ux:Name="otpButton" Width="200" Height="50" Alignment="Top" HitTestMode="LocalBounds" Row="1" Margin="0, -50, 0, 0" Color="BottomGray">
+				<Text Value="CONFIRM" Alignment="Center" FontSize="20" TextColor="White" HitTestMode="LocalBounds" />
+				<Clicked>					
+					<Scale Factor="0.8" Duration=".15" Easing="CubicInOut" />
+					<Toggle Target="showPassForm" />
+				</Clicked>
+				<Rectangle CornerRadius="30" Fill="#BD3925" Width="300" Height="50"/>
+
+				<WhileTrue ux:Name="moveOtpButton">
+				<Move Target="otpButton" Y="0.32" RelativeTo="Size" Duration="0.5" Delay="0.3" Easing="CubicInOut" />
+			</WhileTrue>
+			</Panel>
+		</HidingPanel>
+
+		<HidingPanel ux:Name="passForm" Alignment="Center" Height="60%" Margin="0, 60, 0, 0" >
+			<GridLayout Rows="4*,70,0" />			
+			<Grid ux:Name="passArea" Row="0" RowCount="2" Columns="auto,1*" Height="80%" Opacity="1" Padding="55" Width="390">
+				<TextInput Row="0" Column="1" PlaceholderText="Password" PlaceholderColor="White" TextColor="#fff" Alignment="Center" FontSize="20"/>
+				<Rectangle Row="0" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+
+				<TextInput Row="1" Column="1" PlaceholderText="Confirm Password" PlaceholderColor="White" TextColor="#fff" Alignment="Center" IsPassword="true" FontSize="20"/>
+				<Rectangle Row="1" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+			</Grid>
+
+			<Panel>
+				<Panel ux:Name="submitButton" Width="200" Offset="0%,-90%" Height="50" HitTestMode="LocalBoundsAndChildren" Color="BottomGray">
+					<Text Value="DONE" Alignment="Center" FontSize="20" TextColor="White"/>
+					<Clicked>
+						<Set state.Active="mainState" />
+					</Clicked>
+					<Rectangle CornerRadius="30" Fill="#BD3925" Width="300" Height="50"/>
+				</Panel>
+
+				<WhileTrue ux:Name="moveRegButton">
+					<Move Target="submitButton" Y="0.32" RelativeTo="Size" Duration="0.5" Delay="0.3" Easing="CubicInOut" />
+				</WhileTrue>
+
+				<Panel ux:Name="submitButtonCollapsed" Width="10" Offset="0%,50%" Height="10"/>
+			</Panel>
+		</HidingPanel>
+
+		<HidingPanel ux:Name="startPanel" Alignment="Center" Height="60%" Margin="0, 50, 0, 0">
+			<GridLayout Rows="4*,70,0" />			
+			<Grid ux:Name="loginArea" Row="0" RowCount="2" Columns="auto,1*" Height="80%" Opacity="1" Padding="55" Width="350" >
+				<TextInput Row="0" Column="1" PlaceholderText="ID Number" PlaceholderColor="White" TextColor="#fff"  Width="100%" TextAlignment="Center" FontSize="20"/>
+				<Rectangle Row="0" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+
+				<TextInput Row="1" Column="1" PlaceholderText="Password" PlaceholderColor="White" TextColor="#fff" Alignment="Center" IsPassword="true" FontSize="20"/>
+				<Rectangle Row="1" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#fff" />
+			</Grid>
+
+			<Panel ux:Name="signinButton" Width="200" Height="50" Alignment="Top" HitTestMode="LocalBounds" Row="1" Margin="0, -50, 0, 0" Color="BottomGray">
+				<Text ux:Name="signinText" Value="LOGIN" Alignment="Center" FontSize="20" TextColor="White" HitTestMode="LocalBounds" />
+				<Clicked>
+					<Set state.Active="mainState" />
+				</Clicked>
+				<Rectangle CornerRadius="30" Fill="#BD3925" Width="300" Height="50"/>
+			</Panel>
+
+			<!-- SIGN UP BUTTON -->			
+			<Panel ux:Name="signupButton" Width="200" Height="50" Alignment="Top" HitTestMode="LocalBounds" Row="2" Margin="0, -45, 0, 0" Color="BottomGray"   >
+				<Text Value="REGISTER" Alignment="Center" FontSize="20" TextColor="White" HitTestMode="LocalBounds" />
+				<Clicked>
+					<Toggle Target="showAuthForm" />
+				</Clicked>
+				<Rectangle ux:Name="signupNormalRect" CornerRadius="30" Fill="#BD3925" Width="300" Height="50"/>
+			</Panel>
+
+			<OnBackButton>
+				<HomeScreen Type="CallIntent" />
+			</OnBackButton>
+		</HidingPanel>
+
+		<Panel ux:Name="addButtonPanel">
+			<HidingPanel ux:Name="addButton" Width="50" Height="50" Alignment="BottomRight" Margin="40" HitTestMode="LocalBoundsAndChildren">
+				<Text Value="+" FontSize="30" TextColor="White" Alignment="Center"/>
+			</HidingPanel>
+			<Rectangle ux:Name="greenRect" Color="BottomGray" LayoutMaster="submitButtonCollapsed" CornerRadius="25" Opacity="0">
+				<DropShadow />
+				<WhileTrue ux:Name="showGreenRect">
+					<Change greenRect.Opacity="1" Duration="0.2"/>
+				</WhileTrue>
+			</Rectangle>
+		</Panel>
+
+		<Rectangle ux:Name="whiteRect" Color="White" LayoutMaster="signupButton" Layer="Background" CornerRadius="25"/>
+		<Attractor ux:Name="whiteRectCornerRadiusAttractor" Target="whiteRect.CornerRadius" Value="25" Type="SmoothSnap" Unit="Points"/>
+
+		<HidingPanel ux:Name="logoPanel" Alignment="Top" Height="40%" IsEnabled="true" HitTestMode="None" >
+			<Image ux:Name="logo" File="Assets/mainlogo.png" Width="75%" />
+			<WhileTrue ux:Name="moveLogo">
+				<Move Target="logo" Y="-0.10" RelativeTo="Size" Duration="0.5" Delay="0.3" Easing="CubicInOut" />
+			</WhileTrue>
+			<WhileTrue ux:Name="shiftLogo">
+				<Move Target="logo" Y="-0.11" RelativeTo="Size" Duration="0.5" Delay="0.3" Easing="CubicInOut" />
+			</WhileTrue>
+
+			<WhileKeyboardVisible>
+				<Change logoPanel.IsEnabled="false" />
+			</WhileKeyboardVisible>
+		</HidingPanel>
+
+		<!-- LOADING BUTTON ANNIMATIONS-->
+		<WhileTrue ux:Name="showAuthForm">
+			<Change authForm.IsEnabled="true" Delay="0.6" DelayBack="0"/>
+			<Set startPanel.Opacity="0" />
+			<Set moveLogo.Value="true" />
+			<Set moveButton.Value="true" />
+		</WhileTrue>
+
+		<WhileTrue ux:Name="showOtpForm">		
+			<Set showAuthForm.Value="false" />			
+			<Set authForm.Opacity="0" />
+			<Set startPanel.Opacity="0" />	
+			<Change otpForm.IsEnabled="true" Delay="0.6" DelayBack="0"/>
+			<Set moveLogo.Value="true" />
+			<Set moveOtpButton.Value="true" />
+		</WhileTrue>
+
+		<WhileTrue ux:Name="showPassForm">		
+			<Set showOtpForm.Value="false" />		
+			<Set authForm.Opacity="0" />			
+			<Set otpForm.Opacity="0" />
+			<Set startPanel.Opacity="0" />	
+			<Change passForm.IsEnabled="true" Delay="0.6" DelayBack="0"/>
+			<Set moveLogo.Value="false" />
+			<Set moveRegButton.Value="true" /> 
+			<Set shiftLogo.Value="true" />
+		</WhileTrue>
+ 
+		<ux:Include File="StateAnimation.ux" />
+	</ClientPanel>
+</App>
